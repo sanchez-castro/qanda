@@ -1,7 +1,7 @@
 # qanda
 CS 329S: **Machine Learning Systems Design**<br>
 Stanford, Winter 2022 <br>
-**Adrian Sanchez & Kamil Ali** <br>
+**Adrian Sanchez** <adrian00@stanford.edu> & **Kamil Ali** <kamilali@stanford.edu> <br>
 Final Project<br>
 Question and Answering 🙋 for Product Details: An applicaiton for protein bars 🍫
 
