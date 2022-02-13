@@ -26,31 +26,31 @@ pip3 install --upgrade pip
 pip3 install --upgrade setuptools
 ```
 
-1. [Install prodigy](https://support.prodi.gy/t/suggestions-for-running-on-google-compute-engine/1259/3) with:
+5. [Install prodigy](https://support.prodi.gy/t/suggestions-for-running-on-google-compute-engine/1259/3) with:
 
 ```bash
 pip3 install prodigy -f https://1EBB-F166-A233-7866@download.prodi.gy/
 ```
 
-1. Verify installation with:
+6. Verify installation with:
 
 ```bash
 python3 -m prodigy stats
 ```
 
-1. Download some data
+7. Download some data
 
 ```bash
 mkdir data && cd data && curl -X GET "https://raw.githubusercontent.com/explosion/prodigy-recipes/master/example-datasets/news_headlines.jsonl" > news_headlines2.jsonl
 ```
 
-1. Run the script
+8. Run the script
 
 ```bash
 PRODIGY_HOST=0.0.0.0 PRODIGY_PORT=80 python3 -m prodigy ner.manual ner_news_headlines blank:en ./data/news_headlines2.jsonl --label PERSON,ORGANIZATION,PRODUCT,LOCATION
 ```
 
-1. Access with 
+9. Access with 
 
 ```bash
 http://YOUR_API:80
