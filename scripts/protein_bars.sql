@@ -36,7 +36,7 @@ WITH
   SELECT
     DISTINCT product_url,
     product_title,
-    CONCAT(product_description,' ', product_ingredients) AS product_full_description,
+    TRIM(CONCAT(product_description,' ', product_ingredients)) AS product_full_description,
     '' AS question
   FROM
     _feature_engineering_join
