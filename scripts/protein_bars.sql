@@ -1,6 +1,6 @@
 CREATE OR REPLACE TABLE `ml-q-a.protein_bars.protein_bars` AS
 WITH
-  clean AS (
+  _getting_id_a AS (
   SELECT
     DISTINCT product_description,
     product_url,
@@ -9,32 +9,36 @@ WITH
     `ml-q-a.protein_bars.descriptions_base`
   WHERE
     product_description != ""
-    AND CONTAINS_SUBSTR(product_url,"https://www.walmart.com/ip/") != FALSE ),
-
-  ids AS (
+    AND CONTAINS_SUBSTR(product_url,
+      "https://www.walmart.com/ip/") != FALSE ),
+  
+  _getting_id_b AS (
   SELECT
     * EXCEPT(product_id),
     SPLIT(product_id, '?')[SAFE_OFFSET(0)] AS product_id
   FROM
-    clean),
+    _getting_id_a),
   
-  clean2 AS (
+  _feature_engineering_join AS (
   SELECT
-    product_url,
-    ids.product_id,
-    LOWER(REPLACE(product_title, ",", "")) AS product_title,
-    REGEXP_REPLACE(LOWER(REPLACE(TRIM(REGEXP_REPLACE(ids2.product_description, r'<[^>]*>', ' ')), ",", "")),'[ ]+',' ') AS product_description,
-    REGEXP_REPLACE(LOWER(REPLACE(TRIM(REGEXP_REPLACE(ids2.product_ingredients, r'<[^>]*>', ' ')), ",", "")),'[ ]+',' ') AS product_ingredients
+    _getting_id_b.product_url,
+    _getting_id_b.product_id,
+    LOWER(REPLACE(dplus.product_title, ",", "")) AS product_title,
+    REGEXP_REPLACE(LOWER(REPLACE(TRIM(REGEXP_REPLACE(dplus.product_description, r'<[^>]*>', ' ')), ",", "")),'[ ]+',' ') AS product_description,
+    REGEXP_REPLACE(LOWER(REPLACE(TRIM(REGEXP_REPLACE(dplus.product_ingredients, r'<[^>]*>', ' ')), ",", "")),'[ ]+',' ') AS product_ingredients
   FROM
-    ids
+    _getting_id_b
   JOIN
-    `ml-q-a.protein_bars.descriptions_plus` AS ids2
+    `ml-q-a.protein_bars.descriptions_plus` AS dplus
   ON
-    ids.product_id = CAST(ids2.product_id AS STRING) )
-
-SELECT
-  *,
-  CONCAT(product_description,' ', product_ingredients) AS product_full_description,
-  '' AS question
-FROM
-  clean2
+    _getting_id_b.product_id = CAST(dplus.product_id AS STRING) )
+  
+  SELECT
+    DISTINCT product_url,
+    product_title,
+    CONCAT(product_description,' ', product_ingredients) AS product_full_description,
+    '' AS question
+  FROM
+    _feature_engineering_join
+  ORDER BY
+    product_title
