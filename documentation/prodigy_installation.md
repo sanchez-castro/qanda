@@ -55,3 +55,22 @@ PRODIGY_HOST=0.0.0.0 PRODIGY_PORT=80 python3 -m prodigy ner.manual ner_news_head
 ```bash
 http://YOUR_API:80
 ```
+
+
+## QA Recipe
+
+Using @vitojph [Prodigy's recipe](https://github.com/explosion/prodigy-recipes/pull/10/files) for QA
+
+1. Download the recipe `extractive_qa.py` into the prodigy local VM
+2. Download data in jsonl format to prodigy local VM 
+3. Run
+````
+PRODIGY_HOST=0.0.0.0 PRODIGY_PORT=80 python3 -m prodigy qa qa-test en_core_web_sm ./data/FILE_NAME.jsonl -F prodigy-recipes/other/extractive_qa.py
+````
+4. Annotate instances
+5. Export instances with 
+```
+python3 -m prodigy db-out qa-test > ./qa-test-3-labeled.jsonl
+```
+
+\* For further discussion on prodigy community post about QA recipes please visit: https://support.prodi.gy/t/editing-datasets/66/2 
