@@ -16,4 +16,4 @@ Data schema for Q&A labeling should bea JSONL following convention:
   - You can drop datasets with: `python3 -m prodigy drop test_qanda_extractive` 
 
 3. Lanuch prodigy server with: <br>
-`PRODIGY_HOST=0.0.0.0 PRODIGY_PORT=80 python3 -m prodigy qa qa-test en_core_web_sm ./data/context-question-to-label.jsonl.jsonl -F prodigy-recipes/other/extractive_qa.py`
+`PRODIGY_HOST=0.0.0.0 PRODIGY_PORT=80 python3 -m prodigy qa qa-database en_core_web_sm ./data/context-question-to-label.jsonl.jsonl -F prodigy-recipes/other/extractive_qa.py`
