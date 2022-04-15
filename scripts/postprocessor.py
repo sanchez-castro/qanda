@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import json
 
-with open("/home/jupyter/qanda/data/qa-database-labeled.jsonl", "rb") as inf:
+with open("qa-database-labeled.jsonl", "rb") as inf:
     lines = inf.readlines()
     rows = []
     missed_count = 0
@@ -18,9 +18,9 @@ with open("/home/jupyter/qanda/data/qa-database-labeled.jsonl", "rb") as inf:
             rows.append(row)
         else:
             missed_count += 1
-    print(f"Transformed JSONL into JSON dumping out a total of {missed_count} instances' errors")
+    print(missed_count)
     
     outobj = pd.DataFrame(rows, columns=["context", "question", "answers"])
-    outobj.to_json('/home/jupyter/qanda/data/qa-database-labeled.json')
+    outobj.to_json('qa-database-labeled.json')
     
 
